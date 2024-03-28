@@ -1,6 +1,15 @@
 import os
 
 
+def bytes_to_readable_format(num_bytes):
+    """Convert bytes to a more readable format."""
+    for unit in ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB']:
+        if abs(num_bytes) < 1024.0:
+            return f"{num_bytes:3.1f} {unit}"
+        num_bytes /= 1024.0
+    return f"{num_bytes:.1f} YB"
+
+
 def find_largest_files(start_path):
     file_sizes = []
 
@@ -28,4 +37,5 @@ directory_path = './'
 # Find and print the largest files
 largest_files = find_largest_files(directory_path)
 for file_path, size in largest_files:
-    print(f"{file_path}: {size} bytes")
+    readable_size = bytes_to_readable_format(size)
+    print(f"{file_path}: {readable_size}")
